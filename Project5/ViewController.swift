@@ -17,17 +17,24 @@ class ViewController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Start Game", style: .plain, target: self, action: #selector(startGame))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
         
-        if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
-            if let startWords = try? String(contentsOf: startWordsURL) {
-                allWords = startWords.components(separatedBy: "\n")
+        DispatchQueue.global().async { [weak self] in
+            if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
+                if let startWords = try? String(contentsOf: startWordsURL) {
+                    self?.allWords = startWords.components(separatedBy: "\n")
+                }
             }
+            
+            if ((self?.allWords.isEmpty) == nil) {
+                self?.allWords = ["silkworm"]
+            }
+            DispatchQueue.main.async {
+                self?.startGame()
+            }
+            
+            
         }
         
-        if allWords.isEmpty {
-            allWords = ["silkworm"]
-        }
         
-        startGame()
     }
 
     @objc func startGame() {
