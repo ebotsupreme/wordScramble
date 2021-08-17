@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UITableViewController {
     var allWords = [String]()
-    var usedWords = [String]()
+    var usedWords = Entry()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,29 +27,39 @@ class ViewController: UITableViewController {
             if ((self?.allWords.isEmpty) == nil) {
                 self?.allWords = ["silkworm"]
             }
+            
             DispatchQueue.main.async {
-                self?.startGame()
+                self?.load()
+                
+                if self?.usedWords.entries == [] && self?.usedWords.title == "" {
+                    self?.startGame()
+                }
             }
-            
-            
         }
         
         
     }
 
     @objc func startGame() {
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: "entry")
+        
         title = allWords.randomElement()
-        usedWords.removeAll(keepingCapacity: true)
+        
+        usedWords.title = title ?? ""
+        usedWords.entries.removeAll(keepingCapacity: true)
+        
+        save()
         tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return usedWords.count
+        return usedWords.entries.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Word", for: indexPath)
-        cell.textLabel?.text = usedWords[indexPath.row]
+        cell.textLabel?.text = usedWords.entries[indexPath.row]
         return cell
     }
     
@@ -76,7 +86,8 @@ class ViewController: UITableViewController {
         if isPossible(word: lowerAnswer) {
             if isOriginal(word: lowerAnswer) {
                 if isReal(word: lowerAnswer) {
-                    usedWords.insert(lowerAnswer, at: 0)
+                    usedWords.entries.insert(lowerAnswer, at: 0)
+                    save()
                     
                     let indexPath = IndexPath(row: 0, section: 0)
                     tableView.insertRows(at: [indexPath], with: .automatic)
@@ -122,7 +133,7 @@ class ViewController: UITableViewController {
     
     // has the answer been already used
     func isOriginal(word: String) -> Bool {
-        return !usedWords.contains(word)
+        return !usedWords.entries.contains(word)
     }
     
     // is it an actual word
@@ -140,6 +151,35 @@ class ViewController: UITableViewController {
         let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
+    }
+    
+    func load() {
+        let defaults = UserDefaults.standard
+        
+        if let savedEntry = defaults.object(forKey: "entry") as? Data {
+            let jsonDecoder = JSONDecoder()
+            
+            do {
+                usedWords = try jsonDecoder.decode(Entry.self, from: savedEntry)
+                title = usedWords.title
+                tableView.reloadData()
+            } catch {
+                print("Failed to load entry.")
+            }
+        }
+    }
+    
+    func save() {
+        let jsonEncoder = JSONEncoder()
+        
+        if let savedData = try? jsonEncoder.encode(usedWords) {
+            let defaults = UserDefaults.standard
+            
+            defaults.set(savedData, forKey: "entry")
+        } else {
+            print("Failed to load entry.")
+        }
+        
     }
 
 }

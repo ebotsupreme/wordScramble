@@ -14,6 +14,7 @@
 		552276B126BAFE5800A458BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 552276B026BAFE5800A458BA /* Assets.xcassets */; };
 		552276B426BAFE5800A458BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 552276B226BAFE5800A458BA /* LaunchScreen.storyboard */; };
 		552276BC26BB003600A458BA /* start.txt in Resources */ = {isa = PBXBuildFile; fileRef = 552276BB26BB003600A458BA /* start.txt */; };
+		55C7600726CC185000101D14 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C7600626CC185000101D14 /* Entry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		552276B326BAFE5800A458BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		552276B526BAFE5800A458BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		552276BB26BB003600A458BA /* start.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = start.txt; sourceTree = "<group>"; };
+		55C7600626CC185000101D14 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				552276A726BAFE5600A458BA /* AppDelegate.swift */,
 				552276A926BAFE5600A458BA /* SceneDelegate.swift */,
 				552276AB26BAFE5600A458BA /* ViewController.swift */,
+				55C7600626CC185000101D14 /* Entry.swift */,
 				552276AD26BAFE5600A458BA /* Main.storyboard */,
 				552276B026BAFE5800A458BA /* Assets.xcassets */,
 				552276B226BAFE5800A458BA /* LaunchScreen.storyboard */,
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55C7600726CC185000101D14 /* Entry.swift in Sources */,
 				552276AC26BAFE5600A458BA /* ViewController.swift in Sources */,
 				552276A826BAFE5600A458BA /* AppDelegate.swift in Sources */,
 				552276AA26BAFE5600A458BA /* SceneDelegate.swift in Sources */,
